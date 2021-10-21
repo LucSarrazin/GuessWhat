@@ -84,12 +84,17 @@ class CardGame
     $cards = [new Card('As', 'Trefle'), new Card('7', 'Trefle')];
     return $cards;
   }
-
-  // TODO manque PHPDoc avec pré-condition sur les valeurs acceptables de $index
+  
+  /** retourne une carte du jeu située à l'index demandé
+   *  ou la première carte si l'index n'est pas recevable
+   *
+   *  @param int l'index de la carte demandée
+   *  @return Card la carte à l'index demandé ou première carte du jeu
+   */
   public function getCard(int $index) : Card {
+    // TODO : prendre en compte les SPECS ci-dessus
     return  $this->cards[$index];
   }
-
 
   /**
    * @see https://www.php.net/manual/fr/language.oop5.magic.php#object.tostring
