@@ -84,7 +84,7 @@ class CardGame
     $cards = [new Card('As', 'Trefle'), new Card('7', 'Trefle')];
     return $cards;
   }
-  
+
   /** retourne une carte du jeu située à l'index demandé
    *  ou la première carte si l'index n'est pas recevable
    *
