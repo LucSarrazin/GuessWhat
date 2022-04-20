@@ -32,7 +32,7 @@ Les étapes d'un scénario typique d'usage sont
 ## Premiers éléments d'analyse
 
 ```plantuml
-class Guess {
+class Game {
   withHelp : boolean
 
   start()
@@ -51,24 +51,24 @@ class Card {
   color
 }
 
-Guess"*" -> "\nselectedCard  1  " Card : "                             "
-Guess"*" -> "cardGame 1  " CardGame32 : "                                     "
+Game"*" -> "\nselectedCard  1  " Card : "                             "
+Game"*" -> "cardGame 1  " CardGame32 : "                                     "
 CardGame32 "*" --> "   * cards  " Card : "                                     "
 hide circle
 ```
 
 Cette analyse est une première ébauche, donc incomplète et à ajuster, mais suffisante pour réaliser vos premiers pas sur ce projet. Qu'est-ce qu'elle nous dit ?
 
-* Une instance de `Guess` est liée à une instance de `CardGame32` (un jeu de cartes) nommée `cardGame` et à une instance de `Card` nommée `selectedCard` (la carte à deviner)
+* Une instance de `Game` est liée à une instance de `CardGame32` (un jeu de cartes) nommée `cardGame` et à une instance de `Card` nommée `selectedCard` (la carte à deviner)
 * Une instance de `CardGame32` est liée à une collection (`array`) de cartes (instances de `Card`)
 
 Pour l'essentiel (le cours associé apportera d'autres informations et répondra à vos questions) :
 
-* La classe `Guess` est responsable de la logique du jeu.
+* La classe `Game` est responsable de la logique du jeu.
 * La classe `CardGame32` définit la structure d'un jeu de 32 cartes classique et ses méthodes.
 * La classe `Card` définit la structure d'une carte à jouer et ses méthodes.
 
-Une instance de `Guess` est reliée, à un instant _t_, à un jeu de cartes, lui-même reliè à un ensemble de cartes  (`cards`), et à une instance de `Card` (`selectedCard` est la carte que le joueur doit deviner)
+Une instance de `Game` est reliée, à un instant _t_, à un jeu de cartes, lui-même reliè à un ensemble de cartes  (`cards`), et à une instance de `Card` (`selectedCard` est la carte que le joueur doit deviner)
 
 ## Première implémentation
 
@@ -106,7 +106,7 @@ class Card
 }
 ```
 
-Classe `Guess` (incomplète. Localisation : `src/Core/Guess.php`)
+Classe `Game` (incomplète. Localisation : `src/Core/Game.php`)
 
 ```php
 <?php
@@ -114,10 +114,10 @@ Classe `Guess` (incomplète. Localisation : `src/Core/Guess.php`)
 namespace App\Core;
 
 /**
- * Class Guess : la logique du jeu.
+ * Class Game : la logique du jeu.
  * @package App\Core
  */
-class Guess
+class Game
 {
   /**
    * @var CardGame un jeu de cartes
@@ -205,7 +205,7 @@ FAILURES!
 Tests: 8, Assertions: 10, Failures: 4.
 ```
 
-Cette commande à lancer 8 tests unitaires (8 fonctions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest` et `GuessTest`)
+Cette commande à lancer 8 tests unitaires (8 fonctions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest` et `GameTest`)
 
 Avant d'aller plus loin, vous devez étudier le concept de _test unitaire_ et prendre connaissance des bonnes pratiques de documentation du code.
 
@@ -291,7 +291,7 @@ Travail à faire :
 :information_source: Pour consulter la liste des TODOs, ouvrir la fenêtre TODO tool: `View | Tool Windows | TODO`.
 
 
-## Challenge 4 conception de tests unitaires pour `Guess` (~4h à 8h)
+## Challenge 4 conception de tests unitaires pour `Game` (~4h à 8h)
 
 Votre mission consiste à concevoir une classe de tests qui teste la logique du jeu (représentée par la classe `Guess`).
 Ce travail est à réaliser en binôme. Il y aura des décisions à prendre, qui pourront être discutées collectivement, entre différents binômes.

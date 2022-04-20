@@ -14,7 +14,7 @@ class Card
   private $name;
 
   /**
-   * @var $color string couleur de la carte, par exemples 'Pique', 'Carreau'
+   * @var $color string couleur de la carte, par exemples 'Pique', 'Carreau', 'Trefle'
    */
   private $color;
 

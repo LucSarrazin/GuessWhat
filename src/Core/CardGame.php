@@ -11,8 +11,8 @@ use phpDocumentor\Reflection\Types\Integer;
 class CardGame
 {
   /**
-   * Relation d'ordre (trop) arbitraire sur les couleurs
-   * TODO : appliquer l'ordre international retenu par UNICODE (voir jeu de 52)
+   * TODO : Relation d'ordre (trop) arbitraire sur les couleurs
+   *  appliquer l'ordre international retenu par UNICODE (voir jeu de 52)
    */
    const ORDER_COLORS=['trefle'=> 4, 'coeur'=>3, 'pique'=>2, 'carreau'=>1];
 
@@ -23,7 +23,7 @@ class CardGame
   private $cards;
 
   /**
-   * Guess constructor.
+   * Game constructor.
    * @param array $cards
    */
   public function __construct(array $cards)
@@ -82,7 +82,7 @@ class CardGame
    */
   public static function factory32Cards() : array {
      // TODO création d'un jeu de 32 cartes
-    $cards = [new Card('As', 'Trefle'), new Card('7', 'Trefle')];
+    $cards = [new Card('As', 'Coeur'), new Card('As', 'Trefle'), new Card('7', 'Trefle')];
     return $cards;
   }
 

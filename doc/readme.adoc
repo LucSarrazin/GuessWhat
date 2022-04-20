@@ -4,7 +4,7 @@ ifdef::env-gitlab[:outfilesuffix: .adoc]
 
 [plantuml, diagram-classes, png]
 ....
-class Guess {
+class Game {
   withHelp : boolean
 
   start()
@@ -18,8 +18,8 @@ class Card {
   {static} cmp(Card c1, Card c2) : int
 }
 
-Guess -> "\nselectedCard  1  " Card : "                             "
-Guess -> "cards *  " Card : "                                     "
+Game -> "\nselectedCard  1  " Card : "                             "
+Game -> "cards *  " Card : "                                     "
 
 hide circle
 ....
