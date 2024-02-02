@@ -12,7 +12,7 @@ Développer une logique de jeu en PHP en mettant en oeuvre de la conception obje
 
 Jeu en mode console. Un début d'implémentation est proposé (`play-console.php` à lancer dans une console)
 
-TIP:  Ce projet est un bon candidat à une application web avec symfony, éligible comme activité professionnelle si prise en compte des scores des joueurs dans une base de données.
+TIP:  Ce projet est un bon candidat à une application web avec Laravel, éligible comme activité professionnelle si prise en compte des scores des joueurs dans une base de données.
 
 
 == Objectif
@@ -164,18 +164,19 @@ Une fois cloné, **aller à la racine du projet** puis lancer les commandes suiv
 * `composer update`  (actualisation des dépendances)
 
 * `.\vendor\bin\phpunit --version` (le premier lancement de cette commande provoquera l'installation du plugin `phpunit`, puis lancera les tests.
-  Le résultat devrait être, à un numéro de version prêt : `PHPUnit 9.6.3 by Sebastian Bergmann and contributors.` )
+  Le résultat devrait être, à un numéro de version prêt : `PHPUnit 10.5.9 by Sebastian Bergmann and contributors.` )
 
-TIP: Sous windows la commande est `php .\bin\phpunit --version` (remarquez l'usage de `\` au lieu de `/` )
+TIP: Sous windows la commande est `php .\vendor\bin\phpunit --version` (remarquez l'usage de `\` au lieu de `/` )
 
 === Tester le bon fonctionnement de ce petit existant
 
 ==== Lancement des tests unitaires
   
-À **la racine du projet** du projet, lancer la commande : `./bin/phpunit`
+À **la racine du projet** du projet, lancer la commande : `./bin/phpunit tests`
+(Sous Windows: .\vendor\bin\phpunit tests)
 
 Le système lance alors l'exécution des tests unitaires du dossier `tests` du projet. 14 tests sont exécutés (100 % sans bug), dont 8 en échec (`FAILURE`) :
->>>>>>> olive/master
+
 
 ----
 [racine du projet]$ ./bin/phpunit
@@ -194,14 +195,14 @@ Tests: 14, Assertions: 17, Failures: 8.
 
 ----
 
-Cette commande à lancer 14 tests unitaires (14 méthodes de test) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest`, `CardGameTest` et `GameTest`)
+Cette commande a lancé 14 tests unitaires (14 méthodes de test avec 17 assertions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest`, `CardGameTest` et `GameTest`)
 
 Avant d'aller plus loin, vous devez étudier le concept de _test unitaire_ et prendre connaissance des bonnes pratiques de documentation du code.
 
 Ressources à étudier (compter ~6h) :
 
-* https://openclassrooms.com/fr/courses/4087056-testez-et-suivez-letat-de-votre-application-php/4419446-premiers-pas-avec-phpunit-et-les-tests-unitaires[Sur openclassrooms : premiers-pas-avec-phpunit-et-les-tests-unitaires] **à étudier - chez vous et/ou lors des séances de TP** - n'hésitez pas à noter vos questions, nous y répondrons en cours.
-* https://phpunit.readthedocs.io/fr/latest/[Documentation de PHPUnit en français]
+* https://openclassrooms.com/fr/courses/4087056-testez-unitairement-votre-application-php-symfony/7828665-faites-vos-premiers-pas-avec-phpunit-et-les-tests-unitaires[Sur openclassrooms : premiers-pas-avec-phpunit-et-les-tests-unitaires] ou encore en anglais sur Laracast https://laracasts.com/series/php-testing-jargon **à étudier - chez vous et/ou lors des séances de TP** - n'hésitez pas à noter vos questions, nous y répondrons en cours.
+* https://docs.phpunit.de/en/11.0/[Documentation de PHPUnit en anglais]
 
 TIP: **TODO PROF** : première évaluation sur la capacité de l'étudiant à étudier : questions autour du code présenté et premiers concepts gravitant autour des tests unitaires.
 
@@ -229,7 +230,7 @@ image::doc/guesswhat-phpstormV2.png[analyse uml]
 Le message `There were 8 failures` nous informe que 8 tests ont échoués.
 **Ceci est votre premier challenge !**
 
-Voici un extrait de la classe de test :
+Voici un extrait de la classe de test CardTest:
 
 [, php]
 ----
@@ -266,7 +267,7 @@ WARNING: Attention : la méthode toString fait partie des méthodes dites "_magi
 [TIP]
 ====
 Pour n'exécuter qu'*une seule méthode de test*, d'une classe de test donnée, utiliser le paramètre _filter_ en argument de _phpunit_. Exemple (dans la console, à la racine de l'application) : +
-`./bin/phpunit tests/Core/CardTest.php --filter testCompareSameCard`
+`.\vendor\bin\phpunit tests/Core/CardTest.php --filter testCompareSameCard`
 
 `Testing App\Tests\Core\CardTest 1/1 (100%)`
 
@@ -281,7 +282,9 @@ TIP: Comment consulter l'état d'une variable (simple debug) lors de la mise au 
 =======
 == Travaux pratiques
 
-1 . Dans le terminal du projet, lancer la commande `./bin/phpunit  tests/Core/CardTest`. Le résultat devrait être celui-ci :
+1 . Dans le terminal du projet, lancer la commande `./bin/phpunit  tests/Core/CardTest.php`.
+(Sous Windows: `.\vendor\bin\phpunit tests/Core/CardTest.php`)
+Le résultat devrait être celui-ci :
 
 [source]
 ----

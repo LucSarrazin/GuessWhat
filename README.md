@@ -12,7 +12,7 @@ Développer une logique de jeu en PHP en mettant en oeuvre de la conception obje
 
 Jeu en mode console. Un début d'implémentation est proposé (`play-console.php` à lancer dans une console)
 
-:information_source: Ce projet est un bon candidat à une application web avec symfony, éligible comme activité professionnelle si prise en compte des scores des joueurs dans une base de données.
+:information_source: Ce projet est un bon candidat à une application web avec Laravel, éligible comme activité professionnelle si prise en compte des scores des joueurs dans une base de données.
 
 Les étapes d'un scénario typique d'usage sont 
 
@@ -159,7 +159,7 @@ Une fois cloné, **aller à la racine du projet** puis lancer les commandes suiv
 :information_source: Sous windows la commande est `.\vendor\bin\phpunit --version` (remarquez l'usage de `\` au lieu de `/` )
 
 * `.\vendor\bin\phpunit --version` (le premier lancement de cette commande provoquera l'installation du plugin `phpunit`, puis lancera les tests.
-  Le résultat devrait être, à un numéro de version prêt : `PHPUnit 9.6.3 by Sebastian Bergmann and contributors.` )
+  Le résultat devrait être, à un numéro de version prêt : `PHPUnit 10.5.9 by Sebastian Bergmann and contributors.` )
 
 ### Tester le bon fonctionnement de ce petit existant
 
@@ -167,50 +167,69 @@ Une fois cloné, **aller à la racine du projet** puis lancer les commandes suiv
   
 À **la racine du projet** du projet, lancer la commande : `.\vendor\bin\phpunit tests`
 
-Le système lance alors l'exécution des tests unitaires du dossier `tests` du projet. 9 tests sont exécutés (100 % sans bug), dont 4 en échec (`FAILURE`) :
+Le système lance alors l'exécution des tests unitaires du dossier `tests` du projet. 14 tests sont exécutés (100 % sans bug), dont 8 en échec (`FAILURE`) :
 
 ```
 [racine du projet]$ ./bin/phpunit
 
-Testing Project Test Suite
-....FFFF.                                                    8 / 8 (100%)
+..FFFF...FFFF.                                                    14 / 14 (100%)
 
-Time: 48 ms, Memory: 6.00 MB
+Time: 00:00.056, Memory: 8.00 MB
 
-There were 4 failures:
+There were 8 failures:
 
-1) App\Tests\Core\CardTest::testCompareSameNameNoSameColor
+1) App\Tests\Core\CardGameTest::testCompare
 not implemented !
 
-guesswhat/tests/Core/CardTest.php:65
+C:\laragon\www\2024\guesswhat\tests\Core\CardGameTest.php:26
 
-2) App\Tests\Core\CardTest::testCompareNoSameCardNoSameColor
+2) App\Tests\Core\CardGameTest::testShuffle
 not implemented !
 
-guesswhat/tests/Core/CardTest.php:71
+C:\laragon\www\2024\guesswhat\tests\Core\CardGameTest.php:31
 
-3) App\Tests\Core\CardTest::testCompareNoSameCardSameColor
+3) App\Tests\Core\CardGameTest::testGetCard
 not implemented !
 
-guesswhat/tests/Core/CardTest.php:77
+C:\laragon\www\2024\guesswhat\tests\Core\CardGameTest.php:36
 
-4) App\Tests\Core\CardTest::testToString
+4) App\Tests\Core\CardGameTest::testFactoryCardGame32
 not implemented !
 
-guesswhat/tests/Core/CardTest.php:84
+C:\laragon\www\2024\guesswhat\tests\Core\CardGameTest.php:41
+
+5) App\Tests\Core\CardTest::testCompareSameNameNoSameColor
+not implemented !
+
+C:\laragon\www\2024\guesswhat\tests\Core\CardTest.php:39
+
+6) App\Tests\Core\CardTest::testCompareNoSameNameSameColor
+not implemented !
+
+C:\laragon\www\2024\guesswhat\tests\Core\CardTest.php:44
+
+7) App\Tests\Core\CardTest::testCompareNoSameNameNoSameColor
+not implemented !
+
+C:\laragon\www\2024\guesswhat\tests\Core\CardTest.php:49
+
+8) App\Tests\Core\CardTest::testToString
+not implemented !
+
+C:\laragon\www\2024\guesswhat\tests\Core\CardTest.php:56
 
 FAILURES!
-Tests: 8, Assertions: 10, Failures: 4.
+Tests: 14, Assertions: 17, Failures: 8.
 ```
 
-Cette commande a lancé 9 tests unitaires (9 fonctions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest` et `GuessTest`)
+Cette commande a lancé 14 tests unitaires (14 fonctions avec 17 assertions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest` et `GameTest`)
 
 Avant d'aller plus loin, vous devez étudier le concept de _test unitaire_ et prendre connaissance des bonnes pratiques de documentation du code.
 
 Ressources à étudier :
 
-* Sur openclassrooms : [premiers-pas-avec-phpunit-et-les-tests-unitaires](https://openclassrooms.com/fr/courses/4087056-testez-et-suivez-letat-de-votre-application-php/4419446-premiers-pas-avec-phpunit-et-les-tests-unitaires) **à étudier - chez vous et/ou lors des séances de TP** - n'hésitez pas à noter vos questions, nous y répondrons en cours.
-* [Documentation de PHPUnit en français](https://phpunit.readthedocs.io/fr/latest/)
+* Sur openclassrooms : [premiers-pas-avec-phpunit-et-les-tests-unitaires](https://openclassrooms.com/fr/courses/4087056-testez-unitairement-votre-application-php-symfony/7828665-faites-vos-premiers-pas-avec-phpunit-et-les-tests-unitaires) **à étudier - chez vous et/ou lors des séances de TP** - n'hésitez pas à noter vos questions, nous y répondrons en cours.
+* [Documentation de PHPUnit en anglais](https://docs.phpunit.de/en/11.0/)
 
 ## Challenge 2 implémentation des TODOs de `CardTest` 
 
@@ -250,7 +269,7 @@ class CardTest extends TestCase <2>
 
   public function testName() <3>
   {
-    $card = new Card('As', 'Trèfle');  <4>
+    $card = new Card('As', 'Trefle');  <4>
     $this->assertEquals('As', $card->getName()); <5>
   }
 ```
@@ -290,9 +309,9 @@ Travail à faire :
 :information_source: Pour consulter la liste des TODOs, ouvrir la fenêtre TODO tool: `View | Tool Windows | TODO`.
 
 
-## Challenge 4 conception de tests unitaires pour `Guess` 
+## Challenge 4 conception de tests unitaires pour `Game` 
 
-Votre mission consiste à concevoir une classe de tests qui teste la logique du jeu (représentée par la classe `Guess`).
+Votre mission consiste à concevoir une classe de tests qui teste la logique du jeu (représentée par la classe `Game`).
 Ce travail est à réaliser en binôme. Il y aura des décisions à prendre, qui pourront être discutées collectivement, entre différents binômes.
 
 Voici quelques éléments à prendre en compte dans votre analyse.

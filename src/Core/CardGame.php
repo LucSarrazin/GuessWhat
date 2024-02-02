@@ -10,11 +10,8 @@ use phpDocumentor\Reflection\Types\Integer;
  */
 class CardGame
 {
-  /**
-   * TODO : Relation d'ordre (trop) arbitraire sur les couleurs
-   *  appliquer l'ordre international retenu par UNICODE (voir jeu de 52)
-   */
-   const ORDER_COLORS=['trefle'=> 1, 'carreau'=>2, 'coeur'=>3, 'pique'=>4 ];
+
+   const ORDER_COLORS=['Trefle'=> 1, 'Carreau'=>2, 'Coeur'=>3, 'Pique'=>4 ];
 
 
   /**

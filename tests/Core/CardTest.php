@@ -11,10 +11,10 @@ class CardTest extends TestCase
 
   public function testName()
   {
-    $card = new Card('As', 'Trèfle');
+    $card = new Card('As', 'Trefle');
     $this->assertEquals('As', $card->getName());
 
-    $card = new Card('2', 'Trèfle');
+    $card = new Card('2', 'Trefle');
     $this->assertEquals('2', $card->getName());
   }
 
