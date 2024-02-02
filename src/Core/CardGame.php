@@ -11,7 +11,8 @@ use phpDocumentor\Reflection\Types\Integer;
 class CardGame
 {
   /**
-   * Relation d'ordre sur les couleurs
+   * TODO : Relation d'ordre (trop) arbitraire sur les couleurs
+   *  appliquer l'ordre international retenu par UNICODE (voir jeu de 52)
    */
    const ORDER_COLORS=['trefle'=> 1, 'carreau'=>2, 'coeur'=>3, 'pique'=>4 ];
 
@@ -22,7 +23,7 @@ class CardGame
   private $cards;
 
   /**
-   * Guess constructor.
+   * Game constructor.
    * @param array $cards
    */
   public function __construct(array $cards)
@@ -81,15 +82,20 @@ class CardGame
    */
   public static function factory32Cards() : array {
      // TODO création d'un jeu de 32 cartes
-    $cards = [new Card('As', 'Trefle'), new Card('7', 'Trefle')];
+    $cards = [new Card('As', 'Coeur'), new Card('As', 'Trefle'), new Card('7', 'Trefle')];
     return $cards;
   }
 
-  // TODO manque PHPDoc avec pré-condition sur les valeurs acceptables de $index
+  /** retourne une carte du jeu située à l'index demandé
+   *  ou la première carte si l'index n'est pas recevable
+   *
+   *  @param int l'index de la carte demandée
+   *  @return Card la carte à l'index demandé ou première carte du jeu
+   */
   public function getCard(int $index) : Card {
+    // TODO : prendre en compte les SPECS ci-dessus
     return  $this->cards[$index];
   }
-
 
   /**
    * @see https://www.php.net/manual/fr/language.oop5.magic.php#object.tostring
