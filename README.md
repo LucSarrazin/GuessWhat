@@ -334,7 +334,7 @@ L'analyse de la stratégie du joueur peut être représentée sous la forme d'un
 
 
 * Dépôt de votre projet sur GitLab avec un *README.adoc* ou Github avec un *README.md*. Ce document présentera le travail que vous avez réalisé (Challenge 1 à 4), ce sera votre *rapport de projet*. Il inclura un lien vers le dépôt initial _guesswhat_ (celui-ci) et un vers votre propre dépôt.
-* Livraison par mail d'une version *pdf* de votre README au plus tard **1 semaine avant conseil de classe S2 SIO1**.
+* Livraison par mail d'une version *pdf* de votre README au plus tard **le vendredi 5 avril au soir**.
 
 Ressources utiles :
 

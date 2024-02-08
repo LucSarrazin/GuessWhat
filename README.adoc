@@ -279,8 +279,7 @@ Pour n'exécuter qu'*une seule méthode de test*, d'une classe de test donnée, 
 TIP: Comment consulter l'état d'une variable (simple debug) lors de la mise au point d'un test unitaire avec PHPUnit ? voir : https://stackoverflow.com/questions/8070354/phpunit-dumping-variables
 
 == Challenge-3 : Conception de tests unitaires pour `CardGame`
-=======
-== Travaux pratiques
+=== Travaux pratiques
 
 1 . Dans le terminal du projet, lancer la commande `./bin/phpunit  tests/Core/CardTest.php`.
 (Sous Windows: `.\vendor\bin\phpunit tests/Core/CardTest.php`)
@@ -299,7 +298,7 @@ L'objectif est double : mettre au point des tests unitaires et améliorer la log
 
 À ce niveau là, vous avez acquis une certaine autonomie sur le projet et intégré les concepts de base de la notion de tests unitaires. C'est ce que nous allons vérifier.
 
-== Travail à faire
+=== Travail à faire
 
 * Poursuivez la conception des méthodes de test qui testent le bon comportement des objets (méthodes d'instance) de la classe classe `CardGame`, ainsi que ses méthodes statiques (méthodes de classe)
 
@@ -307,9 +306,12 @@ L'objectif est double : mettre au point des tests unitaires et améliorer la log
 
 * Proposez une méthode de construction (_factory_) pour un jeu de 54 cartes, avec un test unitaire qui lui est dédié.
 
-TIP: Pour consulter la liste des TODOs, ouvrir la fenêtre TODO tool: `View | Tool Windows | TODO`.
+TIP: Pour consulter la liste des TODOs, ouvrir la fenêtre TODO tool: `View | Tool Windows | TODO`
+
+
 
 == Challenge-4 : Conception de tests unitaires pour `Game` (~4h à 8h)
+=======
 
 Votre mission consiste à concevoir une classe de tests qui teste la logique du jeu (représentée par la classe `Game`).
 
@@ -328,9 +330,8 @@ des informations utiles sur ces notions.
 L'analyse de la stratégie du joueur, lorsqu'il termine une partie, devra prendre en compte les paramètres de la partie, à savoir le nombre de cartes et l'aide à la décision si elle a été activée pour la partie en question.
 
 L'analyse de la stratégie du joueur peut être représentée sous la forme d'un texte (une chaine de caractères). C'est à vous de décider de son contenu (sa valeur).
-
-
-== TRAVAIL À FAIRE
+=======
+== Travail à faire
 
 1 . Poursuivre l'implémentation du script `play-console.php`, présent dans le packe `Core`.
 
@@ -346,7 +347,7 @@ Modalité de livraison (mode « binôme ») :
 
 * Dépôt de votre projet sur GitLab avec un *README.adoc* ou Github avec un *README.md*. Ce document présentera le travail que vous avez réalisé (Challenge 1 à 4), ce sera votre *rapport de projet*. Il inclura un lien vers le dépôt initial _guesswhat_ (celui-ci) et un vers votre propre dépôt.
 
-* Livraison par mail d'une version *pdf* de votre README au plus tard *1 semaine avant conseil de classe S2 SIO1*.
+* Livraison par mail d'une version *pdf* de votre README au plus tard *_le vendredi 5 avril au soir_*.
 
 
 Ressources utiles :
