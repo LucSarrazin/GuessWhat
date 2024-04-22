@@ -32,6 +32,9 @@ TIP:  Ce projet est un bon candidat à une application web avec Laravel, éligib
 5. Le jeu affiche des éléments d'analyse (nombre de fois où le joueur a soumis une carte, sa *qualité stratégique*, ...)
 6. Fin de la partie.
 
+== Liens du projet
+=== Projet Prof : https://gitlab.com/timotirob/guesswhat
+=== Projet Groupe : https://github.com/LucSarrazin/GuessWhat/
 
 == Membre du Trinôme
 === Sterenn G.
