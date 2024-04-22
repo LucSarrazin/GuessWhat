@@ -32,124 +32,16 @@ TIP:  Ce projet est un bon candidat à une application web avec Laravel, éligib
 5. Le jeu affiche des éléments d'analyse (nombre de fois où le joueur a soumis une carte, sa *qualité stratégique*, ...)
 6. Fin de la partie.
 
-== Premiers éléments d'analyse
 
-[plantuml]
-----
-class Game {
-  withHelp : boolean
-
-  start()
-  isMatch(c : Card) : boolean
-  getStatistic() : string
-}
-
-class CardGame {
-  name
-  {static} compare(Card c1, Card c2) : int
-}
-
-
-class Card {
-  name
-  color
-}
-
-Game"*" -> "\ncardToGuess  1  " Card : "                             "
-Game"*" -> "cardGame 1  " CardGame : "                                     "
-CardGame "*" --> "   * cards  " Card : "                                     "
-hide circle
-----
-
-Cette analyse est une première ébauche, donc incomplète et à ajuster, mais suffisante pour réaliser vos premiers pas sur ce projet. Qu'est-ce qu'elle nous dit ?
-
-* Une instance de `Game` est liée à une instance de `CardGame` (un jeu de cartes) nommée `cardGame` et à une instance de `Card` nommée `cardToGuess` (la carte à deviner)
-* Une instance de `CardGame` est liée à une collection de cartes (`array` of instances of `Card`) nommées `cards`.
-
-Pour l'essentiel (le cours associé apportera d'autres informations et répondra à vos questions) :
-
-* La classe `Game` est responsable de la logique du jeu.
-* La classe `CardGame` définit la structure d'un jeu de cartes classique (de type jeu de 32 ou 54 cartes) et ses méthodes.
-* La classe `Card` définit la structure d'une carte à jouer et ses méthodes.
-
-En résumé : Une instance de `Game` est reliée, à un instant _t_, à un jeu de cartes, lui-même reliè à un ensemble de cartes  (`cards`), et à une instance de `Card` (`cardToGuess` est la carte que le joueur doit deviner)
-
-== Première implémentation
-
-Classe `Card` (extrait. Localisation : `src/Core/Card.php`)
-
-[, php]
-----
-<?php
-namespace App\Core;
-
-/**
- * Class Card : Définition d'une carte à jouer
- * @package App\Core
- */
-class Card
-{
-  /**
-   * @var $name string nom de la carte, comme par exemples 'As' '2' 'Reine'
-   */
-  private $name;
-
-  /**
-   * @var $color string couleur de la carte, par exemples 'Pique', 'Carreau'
-   */
-  private $color; 
-
-  /**
-   * @return string
-   */
-  public function getName(): string
-  {
-    return $this->name;
-  }
-
-  // [...]
-}
-----
-
-
-Classe `Game` (incomplète. Localisation : `src/Core/Game.php`)
-
-[, php]
-----
-<?php
-
-namespace App\Core;
-
-/**
- * Class Game : la logique du jeu.
- * @package App\Core
- */
-class Game
-{
-  /**
-   * @var CardGame un jeu de cartes
-   */
-  private $cardGame;
-
-  /**
-   * @var Card c'est la carte à deviner par le joueur
-   */
-  private $cardToGuess;
-
-  /**
-   * @var bool pour prendre en compte lors d'une partie
-   */
-  private $withHelp;
-}
-----
-
-NOTE: L'usage de la syntaxe de documentation PHPDoc https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html[DocBloc] est attendue dans votre code !
-
+== Membre du Trinôme
+=== Sterenn G.
+=== Jeremie B.
+=== Luc S.
 
 == Challenge-1 : Prise en main et tests unitaires (4h à 10h)
 
 == Challenge-2 : Implémentation des TODOs de `CardTest` (~2H)
-=== Teste unitaire de CardTest
+=== Tests unitaires de CardTest
 
 [, php]
 ----
@@ -228,7 +120,7 @@ class CardTest extends TestCase
 ----
 
 == Challenge-3 : Conception de tests unitaires pour `CardGame`
-=== Teste unitaire de CardGame
+=== Tests unitaires de CardGame
 
 [, php]
 ----
@@ -285,7 +177,7 @@ class CardGameTest extends TestCase
 ----
 
 == Challenge-4 : Conception de tests unitaires pour `Game` (~4h à 8h)
-=== Testes unitaire Game
+=== Tests unitaires Game
 
 [, php]
 ----
