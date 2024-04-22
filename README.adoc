@@ -148,217 +148,274 @@ NOTE: L'usage de la syntaxe de documentation PHPDoc https://docs.phpdoc.org/3.0/
 
 == Challenge-1 : Prise en main et tests unitaires (4h à 10h)
 
-=== Vérifier les prérequis de votre système
-
-* `php cli`  doit être opérationnel. (en ligne de commande tester : `php -version`)
-* `composer` doit être opérationnel. (en ligne de commande tester : `composer -V`)
-
-=== Télécharger le projet de démarrage
-
-TIP: Conseil : utiliser l'instruction `git clone` ou encore mieux, si vous êtes connecté à GiltLab avec votre compte, faire directement, en ligne, un `fork` de ce projet ; vous pourrez ainsi directement cloner, sur votre machine de dev, votre nouveau projet (et réaliser des `commit` et `push` de votre travail).
-
-Une fois cloné, **aller à la racine du projet** puis lancer les commandes suivantes :
-
-* `composer install`  (le téléchargement et installation des composants déclarés dans le fichier `composer.json` peut prendre quelques minutes)
-
-* `composer update`  (actualisation des dépendances)
-
-* `.\vendor\bin\phpunit --version` (le premier lancement de cette commande provoquera l'installation du plugin `phpunit`, puis lancera les tests.
-  Le résultat devrait être, à un numéro de version prêt : `PHPUnit 10.5.9 by Sebastian Bergmann and contributors.` )
-
-TIP: Sous windows la commande est `php .\vendor\bin\phpunit --version` (remarquez l'usage de `\` au lieu de `/` )
-
-=== Tester le bon fonctionnement de ce petit existant
-
-==== Lancement des tests unitaires
-  
-À **la racine du projet** du projet, lancer la commande : `./bin/phpunit tests`
-(Sous Windows: .\vendor\bin\phpunit tests)
-
-Le système lance alors l'exécution des tests unitaires du dossier `tests` du projet. 14 tests sont exécutés (100 % sans bug), dont 8 en échec (`FAILURE`) :
-
-
-----
-[racine du projet]$ ./bin/phpunit
-
-Testing Project Test Suite
-..FFFF...FFFF.                   14 / 14 (100%)
-
-Time: 60 ms, Memory: 6.00 MB
-
-There were 8 failures:
-
-[. . .]
-
-FAILURES!
-Tests: 14, Assertions: 17, Failures: 8.
-
-----
-
-Cette commande a lancé 14 tests unitaires (14 méthodes de test avec 17 assertions) situés dans le dossier `tests`. Les tests vérifient le comportement de certains objets du projet (instances des classes `CardTest`, `CardGameTest` et `GameTest`)
-
-Avant d'aller plus loin, vous devez étudier le concept de _test unitaire_ et prendre connaissance des bonnes pratiques de documentation du code.
-
-Ressources à étudier (compter ~6h) :
-
-* https://openclassrooms.com/fr/courses/4087056-testez-unitairement-votre-application-php-symfony/7828665-faites-vos-premiers-pas-avec-phpunit-et-les-tests-unitaires[Sur openclassrooms : premiers-pas-avec-phpunit-et-les-tests-unitaires] ou encore en anglais sur Laracast https://laracasts.com/series/php-testing-jargon **à étudier - chez vous et/ou lors des séances de TP** - n'hésitez pas à noter vos questions, nous y répondrons en cours.
-* https://docs.phpunit.de/en/11.0/[Documentation de PHPUnit en anglais]
-
-TIP: **TODO PROF** : première évaluation sur la capacité de l'étudiant à étudier : questions autour du code présenté et premiers concepts gravitant autour des tests unitaires.
-
 == Challenge-2 : Implémentation des TODOs de `CardTest` (~2H)
-
-Bravo, si vous en êtes là, c'est que :
-
-* Votre machine de dev est opérationnelle pour ce projet.
-* Les concepts autour des test unitaires ne vous sont pas étranger.
-* Que vous avez investi au minimum 6h de votre temps au concept de test unitaire.
-
-
-Vous allez maintenant avoir besoin d'un éditeur de code source qui vous permette de passer en mode projet.
-
-TIP: une *erreur de débutant* consiste à ouvrir un fichier à la fois à partir de son éditeur de code (IDE) au lieu d'ouvrir le dossier du projet.
- 
-Nous vous invitons à utiliser **PHPStorm** (un IDE très puissant en terme de conseils et de génération automatique de code).
- 
-Ouvrir le projet via `File | Open`, puis sélectionner le **dossier racine** de votre application.
-
-Dans la fenêtre `Termnal` en bas, vous devriez pouvoir lancer la commande `.\vendor\bin\phpunit tests` et obtenir ceci :
-
-image::doc/guesswhat-phpstormV2.png[analyse uml]
-
-Le message `There were 8 failures` nous informe que 8 tests ont échoués.
-**Ceci est votre premier challenge !**
-
-Voici un extrait de la classe de test CardTest:
+=== Teste unitaire de CardTest
 
 [, php]
 ----
 <?php
 
-namespace App\Tests\Core; <1>
+namespace App\Tests\Core;
 
+use App\Core\CardGame;
 use PHPUnit\Framework\TestCase;
 use App\Core\Card;
 
-class CardTest extends TestCase <2>
+class CardTest extends TestCase
 {
 
-  public function testName() <3>
+
+  public function testName()
   {
-    $card = new Card('As', 'Trèfle');  <4>
-    $this->assertEquals('As', $card->getName()); <5>
+    $card = new Card('As', 'Trefle');
+    $this->assertEquals('As', $card->getName());
+
+    $card = new Card('2', 'Trefle');
+    $this->assertEquals('2', $card->getName());
+  }
+
+  public function testColor()
+  {
+    $card = new Card('As', 'Trefle');
+    $this->assertEquals('Trefle', $card->getColor());
+
+    $card = new Card('As', 'Pique');
+    $this->assertEquals('Pique', $card->getColor());
+  }
+
+  public function testCompareSameCard()
+  {
+    $card1 = new Card('As', 'Trefle');
+    $card2 = new Card('As', 'Trefle');
+    $this->assertEquals(0, CardGame::compare($card1,$card2));
+  }
+
+  public function testCompareSameNameNoSameColor()
+  {
+      $card1 = new Card('As', 'Trefle');
+      $card2 = new Card('As', 'Coeur');
+
+      $this->assertEquals(1, CardGame::compare($card2,$card1));
+      $this->assertEquals(-1, CardGame::compare($card1,$card2));
+
+  }
+
+  public function testCompareNoSameNameSameColor()
+  {
+      $card1 = new Card('2', 'Coeur');
+      $card2 = new Card('Dix', 'Coeur');
+
+      $this->assertEquals(1, CardGame::compare($card2,$card1));
+      $this->assertEquals(-1, CardGame::compare($card2,$card1));
+  }
+
+  public function testCompareNoSameNameNoSameColor()
+  {
+      $card1 = new Card('Dix', 'Pique');
+      $card2 = new Card('Roi', 'Coeur');
+
+      $this->assertEquals(1, CardGame::compare($card1,$card2));
+      $this->assertEquals(-1, CardGame::compare($card2,$card1));
+  }
+
+  public function testToString()
+  {
+      $card = new Card('Dix', 'Trefle');
+
+      $this->assertEquals('Dix de Trefle', $card->__toString());
   }
 
 ----
-<1> Les classes de test sont placées, par convention, sur une arborescence `tests` (ou `test`) parallèle à `src`
-<2> Cette classe de test hérite de `TestCase` (du framework `PHPUnit`)
-<3> Attention, les méthodes de test commencent par le préfix _test_
-<4> Création d'une instance de `Card` (As de trèfle)
-<5> C'est ici que le test a lieu. `$this->assertEquals` (méthode héritée) permet de comparer une *valeur attendue* (premier argument) avec une *valeur obtenue* par l'appel à la méthode `getName` de l'instance précédemment créée (second argument). Le résultat présenté suite à l'appel de `$this->assertEquals` est géré par `PHPUnit`
-qui en fait l'analyse et la restitue en fin d'exécution des tests (exécution provoquée par la commande `./bin/phpunit` dans le terminal)
-
-Dans les classes de package `Core`, le travail à faire a été signalé dans le code source par des commentaires `TODO` (une pratique courante dans le métier).
-
- 
-WARNING: Attention : la méthode toString fait partie des méthodes dites "_magiques_" en PHP (commence par *deux* _underscores_). À ce sujet vous consulterez cette documentation https://www.php.net/manual/fr/language.oop5.magic.php#object.tostring[methode "magique" toString]
-
-
-[TIP]
-====
-Pour n'exécuter qu'*une seule méthode de test*, d'une classe de test donnée, utiliser le paramètre _filter_ en argument de _phpunit_. Exemple (dans la console, à la racine de l'application) : +
-`.\vendor\bin\phpunit tests/Core/CardTest.php --filter testCompareSameCard`
-
-`Testing App\Tests\Core\CardTest 1/1 (100%)`
-
-`Time: 47 ms, Memory: 6.00 MB`
-
-`OK (1 test, 1 assertion)`
-====
-
-TIP: Comment consulter l'état d'une variable (simple debug) lors de la mise au point d'un test unitaire avec PHPUnit ? voir : https://stackoverflow.com/questions/8070354/phpunit-dumping-variables
 
 == Challenge-3 : Conception de tests unitaires pour `CardGame`
-=== Travaux pratiques
+=== Teste unitaire de CardGame
 
-1 . Dans le terminal du projet, lancer la commande `./bin/phpunit  tests/Core/CardTest.php`.
-(Sous Windows: `.\vendor\bin\phpunit tests/Core/CardTest.php`)
-Le résultat devrait être celui-ci :
-
-[source]
+[, php]
 ----
-FAILURES!
-Tests: 7, Assertions: 9, Failures: 4.
+<?php
+
+namespace App\Tests\Core;
+
+use App\Core\Card;
+use App\Core\CardGame;
+use PHPUnit\Framework\TestCase;
+
+class CardGameTest extends TestCase
+{
+
+  public function testToString2Cards()
+  {
+    $cardGame = new CardGame([new Card('As', 'Pique'), new Card('Roi', 'Coeur')]);
+    $this->assertEquals('CardGame : 2 carte(s)',$cardGame->__toString());
+  }
+
+  public function testToString1Card()
+  {
+    $cardGame = new CardGame([new Card('As', 'Pique')]);
+    $this->assertEquals('CardGame : 1 carte(s)',$cardGame->__toString());
+  }
+
+  public function testCompare()
+  {
+    $card1 = new Card('As', 'Pique');
+    $card2 = new Card('As', 'Pique');
+    $cardGame = new CardGame([$card1, $card2]);
+    $this->assertEquals(0, $cardGame->compare($card1, $card2));
+  }
+
+  public function testShuffle()
+  {
+    $cardGame = new CardGame(CardGame::factory52Cards());
+    $cartesMelangees = $cardGame->shuffle($cardGame->getCards());
+    $this->assertEquals($cartesMelangees, $cardGame->shuffle($cardGame->getCards()));
+  }
+
+  public function testGetCard()
+{
+    $cardGame = new CardGame(CardGame::factory52Cards());
+    $this->assertEquals('Dix de Trefle', $cardGame->getCard(0));
+}
+  public function testFactoryCardGame32()
+{
+  $paquet = CardGame::factory32Cards();
+  $this->assertEquals(32, count($paquet));
+}
+
+}
 ----
-
-2 . Corriger et ou implémenter les texts unitaire en échec, et *faites évoluer la classe `Card` en conséquence*, car celle-ci n'est implémentée que partiellement.
-
-L'objectif est double : mettre au point des tests unitaires et améliorer la logique métier des classes du package `Core`.
-
-
-À ce niveau là, vous avez acquis une certaine autonomie sur le projet et intégré les concepts de base de la notion de tests unitaires. C'est ce que nous allons vérifier.
-
-=== Travail à faire
-
-* Poursuivez la conception des méthodes de test qui testent le bon comportement des objets (méthodes d'instance) de la classe classe `CardGame`, ainsi que ses méthodes statiques (méthodes de classe)
-
-* Poursuivez la conception de la classe `CardGame` : les TODO et au delà.
-
-* Proposez une méthode de construction (_factory_) pour un jeu de 54 cartes, avec un test unitaire qui lui est dédié.
-
-TIP: Pour consulter la liste des TODOs, ouvrir la fenêtre TODO tool: `View | Tool Windows | TODO`
-
-
 
 == Challenge-4 : Conception de tests unitaires pour `Game` (~4h à 8h)
-=======
+=== Testes unitaire Game
 
-Votre mission consiste à concevoir une classe de tests qui teste la logique du jeu (représentée par la classe `Game`).
+[, php]
+----
+<?php
 
-Ce travail est à réaliser en binôme. Il y aura également des décisions à prendre, qui pourront être discutées collectivement, entre différents binômes.
+namespace App\Tests\Core;
 
-Voici quelques éléments à prendre en compte dans votre analyse.
+use App\Core\CardGame;
+use PHPUnit\Framework\TestCase;
+use App\Core\Card;
 
-* *Recherche linéaire* (dite aussi séquentielle) : L'utilisateur explore une à une les cartes afin de trouver la bonne.
-Dans le pire cas il soumettra autant de cartes que le jeu en contient (l'ordre de grandeur est O(n), _n_ étant 
-le nombre de cartes), dans le meilleur cas O(1) (coup de chance il tombe dessus du premier coup).  
-* *Recherche dichotomique* (nécessite une relation d'ordre total) : Si l'utilisateur est informé de la position de
-la carte qu'il soumet par rapport à la carte à trouver (inférieur ou supérieur) alors il peut appliquer une 
-stratégie qui réduit le nombre de cas à soumettre dans le pire cas, de l'ordre de O(log2 n). Wikipédia vous fournira
-des informations utiles sur ces notions.
-
-L'analyse de la stratégie du joueur, lorsqu'il termine une partie, devra prendre en compte les paramètres de la partie, à savoir le nombre de cartes et l'aide à la décision si elle a été activée pour la partie en question.
-
-L'analyse de la stratégie du joueur peut être représentée sous la forme d'un texte (une chaine de caractères). C'est à vous de décider de son contenu (sa valeur).
-=======
-== Travail à faire
-
-1 . Poursuivre l'implémentation du script `play-console.php`, présent dans le packe `Core`.
-
-TIP: Vous pouvez jouer et tester vos modifications en lancant ce scriptpar la commande `php play-console.php` (à partir du dossier `src/Core`)
+class CardTest extends TestCase
+{
 
 
-2 . En parallèle, poursuivre la conception de la classe de test `GameTest` et de la classe `Game`.
+  public function testName()
+  {
+    $card = new Card('As', 'Trefle');
+    $this->assertEquals('As', $card->getName());
 
+    $card = new Card('2', 'Trefle');
+    $this->assertEquals('2', $card->getName());
+  }
 
-== Livraison
+  public function testColor()
+  {
+    $card = new Card('As', 'Trefle');
+    $this->assertEquals('Trefle', $card->getColor());
 
-Modalité de livraison (mode « binôme ») :
+    $card = new Card('As', 'Pique');
+    $this->assertEquals('Pique', $card->getColor());
+  }
 
-* Dépôt de votre projet sur GitLab avec un *README.adoc* ou Github avec un *README.md*. Ce document présentera le travail que vous avez réalisé (Challenge 1 à 4), ce sera votre *rapport de projet*. Il inclura un lien vers le dépôt initial _guesswhat_ (celui-ci) et un vers votre propre dépôt.
+  public function testCompareSameCard()
+  {
+    $card1 = new Card('As', 'Trefle');
+    $card2 = new Card('As', 'Trefle');
+    $this->assertEquals(0, CardGame::compare($card1,$card2));
+  }
 
-* Livraison par mail d'une version *pdf* de votre README au plus tard *_le vendredi 5 avril au soir_*.
+  public function testCompareSameNameNoSameColor()
+  {
+      $card1 = new Card('As', 'Trefle');
+      $card2 = new Card('As', 'Coeur');
 
+      $this->assertEquals(1, CardGame::compare($card2,$card1));
+      $this->assertEquals(-1, CardGame::compare($card1,$card2));
 
-Ressources utiles :
+  }
 
-* Gitlab et AsciiDoc: https://docs.gitlab.com/ee/user/asciidoc.html[courte documentation asciidoc sur GitLab]
-* Github et MarkDown https://guides.github.com/features/mastering-markdown/
+  public function testCompareNoSameNameSameColor()
+  {
+      $card1 = new Card('2', 'Coeur');
+      $card2 = new Card('Dix', 'Coeur');
 
-TIP: sous PhpStorm, vous pouvez extraire une version *PDF* de votre REAMDE.adoc (fonction dans la barre de menu d'édition du .adoc).
+      $this->assertEquals(1, CardGame::compare($card2,$card1));
+      $this->assertEquals(-1, CardGame::compare($card2,$card1));
+  }
 
-TIP: Pour le travail en binôme ou trinome, sous PhpStorm, voir le concept (et outil)  _code with me_
+  public function testCompareNoSameNameNoSameColor()
+  {
+      $card1 = new Card('Dix', 'Pique');
+      $card2 = new Card('Roi', 'Coeur');
 
-NOTE: n'hésitez pas à consulter le code source de ce README.adoc et sa version .md.
+      $this->assertEquals(1, CardGame::compare($card1,$card2));
+      $this->assertEquals(-1, CardGame::compare($card2,$card1));
+  }
 
-Bonne analyse et programmation !
+  public function testToString()
+  {
+      $card = new Card('Dix', 'Trefle');
+
+      $this->assertEquals('Dix de Trefle', $card->__toString());
+  }
+
+----
+
+== Challenge-3 : Conception de tests unitaires pour `CardGame`
+=== Teste unitaire de CardGame
+
+[, php]
+----
+<?php
+
+namespace App\Tests\Core;
+
+use App\Core\Card;
+use App\Core\CardGame;
+use PHPUnit\Framework\TestCase;
+
+class CardGameTest extends TestCase
+{
+
+  public function testToString2Cards()
+  {
+    $cardGame = new CardGame([new Card('As', 'Pique'), new Card('Roi', 'Coeur')]);
+    $this->assertEquals('CardGame : 2 carte(s)',$cardGame->__toString());
+  }
+
+  public function testToString1Card()
+  {
+    $cardGame = new CardGame([new Card('As', 'Pique')]);
+    $this->assertEquals('CardGame : 1 carte(s)',$cardGame->__toString());
+  }
+
+  public function testCompare()
+  {
+    $card1 = new Card('As', 'Pique');
+    $card2 = new Card('As', 'Pique');
+    $cardGame = new CardGame([$card1, $card2]);
+    $this->assertEquals(0, $cardGame->compare($card1, $card2));
+  }
+
+  public function testShuffle()
+  {
+    $cardGame = new CardGame(CardGame::factory52Cards());
+    $cartesMelangees = $cardGame->shuffle($cardGame->getCards());
+    $this->assertEquals($cartesMelangees, $cardGame->shuffle($cardGame->getCards()));
+  }
+
+  public function testGetCard()
+{
+    $cardGame = new CardGame(CardGame::factory52Cards());
+    $this->assertEquals('Dix de Trefle', $cardGame->getCard(0));
+}
+  public function testFactoryCardGame32()
+{
+  $paquet = CardGame::factory32Cards();
+  $this->assertEquals(32, count($paquet));
+}
+
+}
+----
